@@ -1,0 +1,11 @@
+from sklearn.preprocessing import OneHotEncoder
+
+ohe = OneHotEncoder(sparse_output=False)
+genre_encoded_array = ohe.fit_transform(df[['genre']])
+
+genre_feature_names = ohe.get_feature_names_out(['genre'])
+genre_df = pd.DataFrame(genre_encoded_array, columns=genre_feature_names)
+df = pd.concat([df, genre_df], axis=1)
+df = df.drop('genre', axis=1)
+print("\n--- One-Hot Encoding Result ---")
+print(df.head())
