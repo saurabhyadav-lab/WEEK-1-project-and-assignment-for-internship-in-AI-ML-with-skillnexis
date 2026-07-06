@@ -1,0 +1,21 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder
+df = pd.read_csv('Titanic-Dataset.csv')
+df['Age'] = df['Age'].fillna(df['Age'].median())
+df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
+df= df.drop(columns=['Cabin'])
+le = LabelEncoder()
+df['Sex'] = le.fit_transform(df['Sex']) # typically maps female -> 0, male -> 1
+df = pd.get_dummies(df, columns=['Embarked'], prefix='Embarked')
+plt.figure(figsize=(10, 6))
+sns.histplot(df['Age'], bins=30, kde=True, color='teal')
+plt.title('Age Distribution of Titanic Passengers (Post-Imputation)')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
+plt.grid(axis='y', alpha=0.75)
+plt.show()
+output_filename = 'Titanic-Dataset-Cleaned.csv'
+df.to_csv(output_filename, index=False)
+print(f"Pipeline complete. Cleaned data saved to '{output_filename}'.")
