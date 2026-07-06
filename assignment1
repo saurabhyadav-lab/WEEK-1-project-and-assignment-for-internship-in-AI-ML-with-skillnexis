@@ -1,0 +1,6 @@
+import pandas as pd
+df = pd.read_csv('music.csv')
+print("--- Dataset Information ---")
+df.info()
+print("\n--- Statistical Summary ---")
+print(df.describe())
