@@ -1,0 +1,9 @@
+import pandas as pd
+df = pd.read_csv('music.csv')
+print("--- Missing Values Before ---")
+print(df.isnull().sum())
+age_mean = df['age'].mean()
+df['age'] = df['age'].fillna(age_mean)
+print("\n--- Missing Values After ---")
+print(df.isnull().sum())
+df.to_csv('music_cleaned.csv', index=False)
